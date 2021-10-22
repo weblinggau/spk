@@ -57,9 +57,7 @@ class Spk extends CI_Controller {
 
 		$this->session->set_flashdata('success', '<div class="alert alert-success">Data berhasil dihapus !</div>');
 		redirect('spk/kriteria');
-
 	}
-
 	public function praeditkriteria(){
 		$iddata = $this->input->post('iddata');
 		$ambildata = $this->Spkmodel->praEditkriteria($iddata)->row();
@@ -120,8 +118,54 @@ class Spk extends CI_Controller {
 	}
 
 	public function addNilai(){
-		var_dump($this->input->post());
+		$nama = $this->input->post('idmahasiswa');
+		$ker = $this->Spkmodel->getkriteria()->result();
+		$val = count($this->Spkmodel->valNilai($nama)->result());
+		if ($val >= 1) {
+			$this->session->set_flashdata('success', '<div class="alert alert-warning">Data Sudah Ada !</div>');
+			redirect('spk/input');
+		}else{
+			foreach ($ker as $k) {
+				$datarr = array(
+					'nilai_ref' => $this->input->post($k->id_data),
+					'id_kriteria' => $k->id_data,
+					'id_mahasiswa' => $nama,
+					);
+				$this->Spkmodel->addNilai($datarr);	
+			}
+			$this->Spkmodel->addisian($nama);
+
+			$vektor = $this->hitungNilai($nama);
+			$isian = array(
+				'vektor_s' => $vektor, 
+				'id_mahasiswa' => $nama
+			);
+
+			$this->Spkmodel->updateIsian($isian);
+			$this->session->set_flashdata('success', '<div class="alert alert-success">Data berhasil di tambahkan !</div>');
+			redirect('spk/input');
+		}
+		
 	}
+
+	private function hitungNilai($id){
+		$ambilnilai = $this->Spkmodel->getNilairef($id)->result();
+		foreach ($ambilnilai as $ab) {
+			$p = $this->Spkmodel->getKriterianilai($ab->id_kriteria)->row();
+			if ($p->status == 'B') {
+				$pk = $p->bobot_w;
+			}elseif ($p->status == 'C') {
+				$pk = "-".$p->bobot_w;
+			}
+			$a[] =pow($ab->nilai_ref, $pk);
+		}
+		$output = array_reduce($a, function($prev, $now){return $prev*$now;}, 1);
+		return $output;
+		// var_dump($a);
+	}
+
+
+
 
 	private function hitung($data){
 		$dataker = $this->Spkmodel->getkriteria()->result();

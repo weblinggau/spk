@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 22 Okt 2021 pada 06.09
+-- Waktu pembuatan: 22 Okt 2021 pada 10.03
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -30,15 +30,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `data_isian` (
   `id_data` int(11) NOT NULL,
-  `id_mahasiswa` int(11) NOT NULL
+  `id_mahasiswa` int(11) NOT NULL,
+  `vektor_s` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `data_isian`
 --
 
-INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`) VALUES
-(1, 7);
+INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`, `vektor_s`) VALUES
+(4, 6, '0.22340199994991'),
+(6, 7, '0.19754450292142'),
+(7, 9, '0.25838015908098');
 
 -- --------------------------------------------------------
 
@@ -59,10 +62,10 @@ CREATE TABLE `data_kriteria` (
 --
 
 INSERT INTO `data_kriteria` (`id_data`, `nama_kriteria`, `bobot`, `bobot_w`, `status`) VALUES
-(1, 'Nilai Raport', 4, '0.25', 'B'),
-(2, 'Prestasi Akademik', 5, '0.3125', 'B'),
-(10, 'Pengahasilan Orang Tua', 4, '0.25', 'C'),
-(12, 'Prestasi Non Akademik', 3, '0.1875', 'B');
+(1, 'Nilai Raport', 4, '0.23529411764706', 'B'),
+(2, 'Prestasi Akademik', 5, '0.29411764705882', 'B'),
+(10, 'Pengahasilan Orang Tua', 4, '0.23529411764706', 'C'),
+(13, 'Prestasi Non Akademik', 4, '0.23529411764706', 'B');
 
 -- --------------------------------------------------------
 
@@ -74,19 +77,26 @@ CREATE TABLE `data_perhitungan` (
   `id_ref` int(20) NOT NULL,
   `id_mahasiswa` int(20) NOT NULL,
   `id_kriteria` int(20) NOT NULL,
-  `nilai_ref` text COLLATE utf8mb4_general_ci NOT NULL,
-  `nilai_vektor_s` text COLLATE utf8mb4_general_ci NOT NULL
+  `nilai_ref` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `data_perhitungan`
 --
 
-INSERT INTO `data_perhitungan` (`id_ref`, `id_mahasiswa`, `id_kriteria`, `nilai_ref`, `nilai_vektor_s`) VALUES
-(1, 7, 1, '85', ''),
-(2, 7, 2, '23', ''),
-(3, 7, 10, '67', ''),
-(4, 7, 12, '36', '');
+INSERT INTO `data_perhitungan` (`id_ref`, `id_mahasiswa`, `id_kriteria`, `nilai_ref`) VALUES
+(17, 6, 1, '90'),
+(18, 6, 2, '2'),
+(19, 6, 10, '500000'),
+(20, 6, 13, '4'),
+(25, 7, 1, '90'),
+(26, 7, 2, '3'),
+(27, 7, 10, '700000'),
+(28, 7, 13, '2'),
+(29, 9, 1, '85'),
+(30, 9, 2, '5'),
+(31, 9, 10, '600000'),
+(32, 9, 13, '3');
 
 -- --------------------------------------------------------
 
@@ -319,19 +329,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `data_isian`
 --
 ALTER TABLE `data_isian`
-  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_kriteria`
 --
 ALTER TABLE `data_kriteria`
-  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_perhitungan`
 --
 ALTER TABLE `data_perhitungan`
-  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`

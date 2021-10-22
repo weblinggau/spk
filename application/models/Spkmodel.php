@@ -70,5 +70,45 @@
       	return $query;
     }
 
+    public function addNilai($data){
+	    	$isian = array(
+	    		'id_mahasiswa' => $data['id_mahasiswa'],
+	    		'id_kriteria' => $data['id_kriteria'],
+	    		'nilai_ref' => $data['nilai_ref'],
+	    	);
+	    	$this->db->insert('data_perhitungan',$isian);
+    }
+
+    public function addisian($data){
+    	$isian2 = array(
+	    		'id_mahasiswa' => $data['id_mahasiswa'],
+	    	);
+	    $this->db->insert('data_isian',$isian2);
+    }
+
+    public function getKriterianilai($id){
+    	$this->db->select('*');
+      	$this->db->from('data_kriteria');
+      	$this->db->where('id_data',$id);
+      	$query = $this->db->get();
+      	return $query;
+    }
+    
+
+    public function valNilai($id){
+    	$this->db->select('*');
+      	$this->db->from('data_isian');
+      	$this->db->where('id_mahasiswa',$id);
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function updateIsian($data){
+    	$datas = array('vektor_s' => $data['vektor_s'], );
+    	$this->db->where('id_mahasiswa' ,$data['id_mahasiswa']);
+        $this->db->update('data_isian',$datas);
+        return;
+    }
+
 
 }

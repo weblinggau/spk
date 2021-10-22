@@ -95,7 +95,7 @@
         <form action="<?= base_url('spk/addnilai'); ?>" method="post">
           <div class="form-group">
             <label>Nama Mahasiswa</label>
-            <select class="form-control" name="jabatan" required>
+            <select class="form-control" name="idmahasiswa" required>
               <option selected>Open this select menu</option>
                <?php foreach ($mahasiswa as $mas) {
                       
