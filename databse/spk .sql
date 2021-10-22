@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 21 Okt 2021 pada 14.53
+-- Waktu pembuatan: 22 Okt 2021 pada 06.09
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -25,6 +25,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `data_isian`
+--
+
+CREATE TABLE `data_isian` (
+  `id_data` int(11) NOT NULL,
+  `id_mahasiswa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `data_isian`
+--
+
+INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`) VALUES
+(1, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `data_kriteria`
 --
 
@@ -41,8 +59,10 @@ CREATE TABLE `data_kriteria` (
 --
 
 INSERT INTO `data_kriteria` (`id_data`, `nama_kriteria`, `bobot`, `bobot_w`, `status`) VALUES
-(1, 'nilai raport', 3, '0.6', 'B'),
-(2, 'prestasi siswa', 2, '0.4', 'B');
+(1, 'Nilai Raport', 4, '0.25', 'B'),
+(2, 'Prestasi Akademik', 5, '0.3125', 'B'),
+(10, 'Pengahasilan Orang Tua', 4, '0.25', 'C'),
+(12, 'Prestasi Non Akademik', 3, '0.1875', 'B');
 
 -- --------------------------------------------------------
 
@@ -57,6 +77,16 @@ CREATE TABLE `data_perhitungan` (
   `nilai_ref` text COLLATE utf8mb4_general_ci NOT NULL,
   `nilai_vektor_s` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `data_perhitungan`
+--
+
+INSERT INTO `data_perhitungan` (`id_ref`, `id_mahasiswa`, `id_kriteria`, `nilai_ref`, `nilai_vektor_s`) VALUES
+(1, 7, 1, '85', ''),
+(2, 7, 2, '23', ''),
+(3, 7, 10, '67', ''),
+(4, 7, 12, '36', '');
 
 -- --------------------------------------------------------
 
@@ -222,6 +252,12 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama_user`, `email`, `le
 --
 
 --
+-- Indeks untuk tabel `data_isian`
+--
+ALTER TABLE `data_isian`
+  ADD PRIMARY KEY (`id_data`);
+
+--
 -- Indeks untuk tabel `data_kriteria`
 --
 ALTER TABLE `data_kriteria`
@@ -280,16 +316,22 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `data_isian`
+--
+ALTER TABLE `data_isian`
+  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `data_kriteria`
 --
 ALTER TABLE `data_kriteria`
-  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_perhitungan`
 --
 ALTER TABLE `data_perhitungan`
-  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`

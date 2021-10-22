@@ -110,10 +110,17 @@ class Spk extends CI_Controller {
 
 	public function input()	{
 		$data["title"] = "Input Nilai Mahasiswa";
-		$data["kriteria"] = "";
+		$data["kriteria"] = $this->Spkmodel->getkriteria()->result();
+		$data["nilai"] = $this->Spkmodel->getNilaimahasiswa()->result();
+		$data["mahasiswa"] = $this->Spkmodel->getMahasiswa()->result();
+		
 		$this->load->view('layout/header', $data);
 		$this->load->view('spk/input', $data);
 		$this->load->view('layout/footer');
+	}
+
+	public function addNilai(){
+		var_dump($this->input->post());
 	}
 
 	private function hitung($data){
@@ -125,6 +132,11 @@ class Spk extends CI_Controller {
 
 		$rumus = $data / $jumlahbawah ;
 		return $rumus;
+	}
+
+	public function test(){
+		$dataker = $this->Spkmodel->getNilairef('7')->result();
+		var_dump($dataker['0']->nilai_ref);
 	}
 	
 }

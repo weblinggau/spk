@@ -17,25 +17,33 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama Kriteria</th>
-                  <th>Bobot</th>
-                  <th>Persen Bobot</th>
+                  <th>Nama Mahasiswa</th>
+                  <?php 
+                  foreach ($kriteria as $kr) {
+                  ?>
+                  <th><?= $kr->nama_kriteria ?></th>
+                  <?php } ?>
                   <th>Opsi</th>
                 </tr>
               </thead>
               <tbody>
                 <?php 
                 $no = 1;
-                foreach ($kriteria as $ker) {
+                foreach ($nilai as $nil) {
+                  
                  ?>
                 <tr>
                   <td><?= $no++; ?></td>
-                  <td><?= $ker->nama_kriteria; ?></td>
-                  <td><?= $ker->bobot; ?></td>
-                  <td><?= $ker->bobot_w; ?></td>
+                  <td><?= $nil->nama_mahasiswa; ?></td>
+                  <?php 
+                  $dataker = $this->Spkmodel->getNilairef($nil->id_mahasiswa)->result();
+                  foreach ($dataker as $key) {
+                  ?>
+                  <td><?= $key->nilai_ref; ?></td>
+                  <?php } ?>
                   <td>
-                    <a href="" data-toggle="modal" data-target="#editkriteria" data-id="<?= $ker->id_data; ?>" class="btn btn-sm btn-primary">Ubah</a>
-                    <a href="<?= base_url('spk/hapuskriteria/').$ker->id_data; ?>" class="btn btn-sm btn-danger">Hapus</a>
+                    <a href="" data-toggle="modal" data-target="#editnilai" data-id="<?= $nil->id_mahasiswa; ?>" class="btn btn-sm btn-primary">Ubah</a>
+                    <a href="<?= base_url('spk/hapusnilai/').$nil->id_mahasiswa; ?>" class="btn btn-sm btn-danger">Hapus</a>
                   </td>
                 </tr>
                 <?php } ?>
@@ -81,25 +89,28 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Tambah Data Pimpinan</h4>
+        <h4 class="modal-title" id="myModalLabel">Tambah Data Nilai</h4>
       </div>
       <div class="modal-body">
-        <form action="<?= base_url('spk/addkriteria'); ?>" method="post">
+        <form action="<?= base_url('spk/addnilai'); ?>" method="post">
           <div class="form-group">
-            <label>Nama Kriteria</label>
-            <input type="text" name="nama" required="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Bobot</label>
-            <input type="number" name="bobot" required="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Jenis</label>
-            <select class="form-control" name="jenis">';
-                  <option value="B">Benefit</option>
-                  <option value="C">Cost</option>
+            <label>Nama Mahasiswa</label>
+            <select class="form-control" name="jabatan" required>
+              <option selected>Open this select menu</option>
+               <?php foreach ($mahasiswa as $mas) {
+                      
+              ?>
+               <option value="<?= $mas->id_mahasiswa; ?>"><?= $mas->nama_mahasiswa; ?></option>
+               <?php } ?>
             </select>
           </div>
+          <?php foreach ($kriteria as $kir) {
+            ?>
+          <div class="form-group">
+            <label><?=$kir->nama_kriteria ?></label>
+            <input type="text" name="<?= $kir->id_data;?>" required="" class="form-control">
+          </div>
+          <?php } ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Tutup</button>

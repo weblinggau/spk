@@ -10,6 +10,8 @@ Aji Arian Nofa
 
 
 # Cangelog
+22-10-2021 <br/>
+-update perhitungan input data nilai <br/><br/>
 21-10-2021 <br/>
 -inisialisasi projek <br/><br/>
 

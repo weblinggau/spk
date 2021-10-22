@@ -47,5 +47,28 @@
         return;
     }
 
+    public function getNilaimahasiswa(){
+    	$this->db->select('*');
+      	$this->db->from('data_isian');
+      	$this->db->join('mahasiswa','mahasiswa.id_mahasiswa = data_isian.id_mahasiswa','left');
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function getMahasiswa(){
+    	$this->db->select('*');
+      	$this->db->from('mahasiswa');
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function getNilairef($id){
+    	$this->db->select('*');
+      	$this->db->from('data_perhitungan');
+      	$this->db->where('id_mahasiswa',$id);
+      	$query = $this->db->get();
+      	return $query;
+    }
+
 
 }
