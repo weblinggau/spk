@@ -108,6 +108,14 @@ class Spk extends CI_Controller {
 		redirect('spk/kriteria');
 	}
 
+	public function input()	{
+		$data["title"] = "Input Nilai Mahasiswa";
+		$data["kriteria"] = "";
+		$this->load->view('layout/header', $data);
+		$this->load->view('spk/input', $data);
+		$this->load->view('layout/footer');
+	}
+
 	private function hitung($data){
 		$dataker = $this->Spkmodel->getkriteria()->result();
 		foreach ($dataker as $key) {
