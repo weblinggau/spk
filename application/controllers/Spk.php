@@ -148,6 +148,58 @@ class Spk extends CI_Controller {
 		
 	}
 
+	public function praEditnilai(){
+		$idmahasiswa = $this->input->post('iddata');
+		// $ker = $this->Spkmodel->getkriteria()->result();
+		$nilai = $this->Spkmodel->getNilairefid($idmahasiswa)->result();
+		$spek = $this->Spkmodel->getNilaispek($idmahasiswa)->row();
+		echo '
+			<div class="form-group">
+            <label>Nama Mahasiswa</label>
+            <input type="hidden" name="iddata" value="'.$spek->id_mahasiswa.'">
+            <input type="text" name="" readonly value="'.$spek->nama_mahasiswa.'" class="form-control">
+          </div>';
+           foreach ($nilai as $kir) {
+           	$nil = $this->Spkmodel->getNilaikerid($idmahasiswa,$kir->id_kriteria)->row();
+           	echo '
+            <div class="form-group">
+            <label>'.$kir->nama_kriteria.'</label>
+            <input type="text" name="'.$kir->id_kriteria.'" class="form-control" value="'.$nil->nilai_ref.'">
+          </div>';
+      		}
+		
+	}
+
+	public function editNilai(){
+		$nama = $this->input->post('iddata');
+		$ker = $this->Spkmodel->getkriteria()->result();
+		
+		foreach ($ker as $k) {
+			$datarr = array(
+				'nilai_ref' => $this->input->post($k->id_data),
+				'id_kriteria' => $k->id_data,
+				'id_mahasiswa' => $nama,
+				);
+			$this->Spkmodel->updateNilai($datarr);	
+		}
+		$vektor = $this->hitungNilai($nama);
+		$isian = array(
+			'vektor_s' => $vektor, 
+			'id_mahasiswa' => $nama
+		);
+
+		$this->Spkmodel->updateIsian($isian);
+		$this->session->set_flashdata('success', '<div class="alert alert-success">Data berhasil di ubah !</div>');
+		redirect('spk/input');
+		
+	}
+
+	public function hapusNilai($id){
+		$this->Spkmodel->hapusNilai($id);
+		$this->session->set_flashdata('success', '<div class="alert alert-warning">Data berhasil di hapus !</div>');
+		redirect('spk/input');
+	}
+
 	private function hitungNilai($id){
 		$ambilnilai = $this->Spkmodel->getNilairef($id)->result();
 		foreach ($ambilnilai as $ab) {

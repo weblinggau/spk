@@ -58,17 +58,17 @@
 
 <!-- awal edit -->
 
-<div class="modal fade" id="editkriteria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editnilai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Data Kriteria</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit Data Nilai</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-            <form class="prodi" method="post" action="<?= base_url("spk/editkriteria")?>">
+            <form class="prodi" method="post" action="<?= base_url("spk/editnilai")?>">
               <div class="modal-data"></div>
             </div>
             <div class="modal-footer">
@@ -124,12 +124,12 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#editkriteria').on('show.bs.modal', function (e) {
+        $('#editnilai').on('show.bs.modal', function (e) {
             var userDat = $(e.relatedTarget).data('id');
             /* fungsi AJAX untuk melakukan fetch data */
             $.ajax({
                 type : 'post',
-                url : '<?= base_url("spk/praeditkriteria") ?>',
+                url : '<?= base_url("spk/praeditnilai") ?>',
                 /* detail per identifier ditampung pada berkas detail.php yang berada di folder application/view */
                 data :  'iddata='+ userDat,
                 /* memanggil fungsi getDetail dan mengirimkannya */

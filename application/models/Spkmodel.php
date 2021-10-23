@@ -42,8 +42,15 @@
     }
 
     public function hapusKriteria($id){
-    	$this->db->where('id_data',$id);
-        $this->db->delete('data_kriteria');
+    	$this->db->trans_start();
+
+	    	$this->db->where('id_data',$id);
+	        $this->db->delete('data_kriteria');
+
+	        $this->db->where('id_kriteria',$id);
+	        $this->db->delete('data_perhitungan');
+
+        $this->db->trans_complete();
         return;
     }
 
@@ -109,6 +116,55 @@
         $this->db->update('data_isian',$datas);
         return;
     }
+
+    public function getNilaispek($id){
+    	$this->db->select('*');
+      	$this->db->from('mahasiswa');
+      	$this->db->where('id_mahasiswa',$id);
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function getNilairefid($id){
+    	$this->db->select('*');
+      	$this->db->from('data_perhitungan');
+      	$this->db->where('id_mahasiswa',$id);
+      	$this->db->join('data_kriteria','data_kriteria.id_data = data_perhitungan.id_kriteria','left');
+      	$query = $this->db->get();
+      	return $query;
+    }
+    public function getNilaikerid($id,$data){
+    	$this->db->select('*');
+      	$this->db->from('data_perhitungan');
+      	$this->db->where('id_mahasiswa',$id);
+      	$this->db->where('id_kriteria',$data);
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function updateNilai($data){
+	   $isian = array(
+	   	'nilai_ref' => $data['nilai_ref'],
+	   );
+	   $this->db->where('id_mahasiswa' ,$data['id_mahasiswa']);
+	   $this->db->where('id_kriteria' ,$data['id_kriteria']);
+       $this->db->update('data_perhitungan',$isian);
+       return;
+    }
+
+    public function hapusNilai($id){
+    	$this->db->trans_start();
+	    	$this->db->where('id_mahasiswa',$id);
+	        $this->db->delete('data_isian');
+
+	        $this->db->where('id_mahasiswa',$id);
+	        $this->db->delete('data_perhitungan');
+		$this->db->trans_complete();
+    	
+        return;
+    }
+
+
 
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 22 Okt 2021 pada 10.03
+-- Waktu pembuatan: 23 Okt 2021 pada 04.23
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -39,9 +39,7 @@ CREATE TABLE `data_isian` (
 --
 
 INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`, `vektor_s`) VALUES
-(4, 6, '0.22340199994991'),
-(6, 7, '0.19754450292142'),
-(7, 9, '0.25838015908098');
+(8, 6, '0.23454739767196');
 
 -- --------------------------------------------------------
 
@@ -62,10 +60,10 @@ CREATE TABLE `data_kriteria` (
 --
 
 INSERT INTO `data_kriteria` (`id_data`, `nama_kriteria`, `bobot`, `bobot_w`, `status`) VALUES
-(1, 'Nilai Raport', 4, '0.23529411764706', 'B'),
-(2, 'Prestasi Akademik', 5, '0.29411764705882', 'B'),
-(10, 'Pengahasilan Orang Tua', 4, '0.23529411764706', 'C'),
-(13, 'Prestasi Non Akademik', 4, '0.23529411764706', 'B');
+(1, 'Nilai Raport', 4, '0.25', 'B'),
+(2, 'Prestasi Akademik', 5, '0.3125', 'B'),
+(10, 'Pengahasilan Orang Tua', 4, '0.25', 'C'),
+(14, 'Prestasi Non Akademik', 3, '0.1875', 'B');
 
 -- --------------------------------------------------------
 
@@ -85,18 +83,10 @@ CREATE TABLE `data_perhitungan` (
 --
 
 INSERT INTO `data_perhitungan` (`id_ref`, `id_mahasiswa`, `id_kriteria`, `nilai_ref`) VALUES
-(17, 6, 1, '90'),
-(18, 6, 2, '2'),
-(19, 6, 10, '500000'),
-(20, 6, 13, '4'),
-(25, 7, 1, '90'),
-(26, 7, 2, '3'),
-(27, 7, 10, '700000'),
-(28, 7, 13, '2'),
-(29, 9, 1, '85'),
-(30, 9, 2, '5'),
-(31, 9, 10, '600000'),
-(32, 9, 13, '3');
+(33, 6, 1, '80'),
+(34, 6, 2, '4'),
+(35, 6, 10, '500000'),
+(36, 6, 14, '5');
 
 -- --------------------------------------------------------
 
@@ -329,19 +319,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `data_isian`
 --
 ALTER TABLE `data_isian`
-  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_kriteria`
 --
 ALTER TABLE `data_kriteria`
-  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_data` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_perhitungan`
 --
 ALTER TABLE `data_perhitungan`
-  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`
