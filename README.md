@@ -15,6 +15,7 @@ password : admin<br>
 
 # Cangelog
 24-10-2021 (Projek selesai) <br/>
+-Fix minor bugs untuk php versi 8.0<br/>
 -Fix struktur database<br/>
 -Menambahkan module cek kelulusan<br/><br/>
 23-10-2021 <br/>
