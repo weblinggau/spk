@@ -119,6 +119,7 @@ class Spk extends CI_Controller {
 
 	public function addNilai(){
 		$nama = $this->input->post('idmahasiswa');
+		$ids = $this->input->post('idmahasiswa');
 		$ker = $this->Spkmodel->getkriteria()->result();
 		$val = count($this->Spkmodel->valNilai($nama)->result());
 		if ($val >= 1) {
@@ -133,15 +134,16 @@ class Spk extends CI_Controller {
 					);
 				$this->Spkmodel->addNilai($datarr);	
 			}
-			$this->Spkmodel->addisian($nama);
+			$this->Spkmodel->addisian($ids);
 
 			$vektor = $this->hitungNilai($nama);
 			$isian = array(
 				'vektor_s' => $vektor, 
-				'id_mahasiswa' => $nama
+				'id_mahasiswa' => $nama,
 			);
 
 			$this->Spkmodel->updateIsian($isian);
+			// var_dump($isian);
 			$this->session->set_flashdata('success', '<div class="alert alert-success">Data berhasil di tambahkan !</div>');
 			redirect('spk/input');
 		}
@@ -172,6 +174,7 @@ class Spk extends CI_Controller {
 
 	public function editNilai(){
 		$nama = $this->input->post('iddata');
+		$id = $this->input->post('iddata');
 		$ker = $this->Spkmodel->getkriteria()->result();
 		
 		foreach ($ker as $k) {
@@ -185,7 +188,7 @@ class Spk extends CI_Controller {
 		$vektor = $this->hitungNilai($nama);
 		$isian = array(
 			'vektor_s' => $vektor, 
-			'id_mahasiswa' => $nama
+			'id_mahasiswa' => $nama,
 		);
 
 		$this->Spkmodel->updateIsian($isian);
@@ -198,6 +201,48 @@ class Spk extends CI_Controller {
 		$this->Spkmodel->hapusNilai($id);
 		$this->session->set_flashdata('success', '<div class="alert alert-warning">Data berhasil di hapus !</div>');
 		redirect('spk/input');
+	}
+
+	public function lulus(){
+		$cek = count($this->Spkmodel->getLulus()->result());
+		$getmas = $this->Spkmodel->getLulus()->result();
+		if ($cek > 0) {
+			foreach ($getmas as $d) {
+				$lulus = $this->hitungKelulusan($d->id_mahasiswa);
+				$kelulusan = array(
+					'id_mahasiswa' => $d->id_mahasiswa,
+					'nilai_akhir' => $lulus
+				);
+				$this->Spkmodel->updateIsianLulus($kelulusan);
+				// echo $kelulusan['nilai_akhir']."<br><br>";
+			}
+
+			$data["switch"] = 'terisi';
+		}else{
+			$data["switch"] = 'kosong';
+		}
+		$data["title"] = "Cek Kelulusan";
+		$data["mahasiswa"] = $this->Spkmodel->getNilaiKelulusan()->result();
+		// $test = $this->Spkmodel->getNilaiKelulusan()->result();
+		// var_dump($test);
+		$this->load->view('layout/header', $data);
+		$this->load->view('spk/lulus', $data);
+		$this->load->view('layout/footer');
+	}
+
+
+	private function hitungKelulusan($id){
+		$dataker = $this->Spkmodel->getlulus()->result();
+		foreach ($dataker as $key) {
+			$arr[] = $key->vektor_s;
+		}
+		$jumlahbawah = array_sum($arr);
+
+		$datamahas = $this->Spkmodel->getLulusmahas($id)->row();
+		$rumus = $datamahas->vektor_s / $jumlahbawah ;
+		
+		return $rumus;
+		// var_dump($rumus);
 	}
 
 	private function hitungNilai($id){
@@ -215,8 +260,6 @@ class Spk extends CI_Controller {
 		return $output;
 		// var_dump($a);
 	}
-
-
 
 
 	private function hitung($data){

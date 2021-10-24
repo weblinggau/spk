@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 23 Okt 2021 pada 04.23
+-- Waktu pembuatan: 24 Okt 2021 pada 02.37
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -31,15 +31,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `data_isian` (
   `id_data` int(11) NOT NULL,
   `id_mahasiswa` int(11) NOT NULL,
-  `vektor_s` text COLLATE utf8mb4_general_ci NOT NULL
+  `vektor_s` text COLLATE utf8mb4_general_ci NOT NULL,
+  `nilai_akhir` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `data_isian`
 --
 
-INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`, `vektor_s`) VALUES
-(8, 6, '0.23454739767196');
+INSERT INTO `data_isian` (`id_data`, `id_mahasiswa`, `vektor_s`, `nilai_akhir`) VALUES
+(26, 6, '0.20912230682388', '0.31359647195977'),
+(27, 7, '0.19429146192346', '0.2913563737723'),
+(28, 9, '0.26343782405599', '0.39504715426793');
 
 -- --------------------------------------------------------
 
@@ -83,10 +86,18 @@ CREATE TABLE `data_perhitungan` (
 --
 
 INSERT INTO `data_perhitungan` (`id_ref`, `id_mahasiswa`, `id_kriteria`, `nilai_ref`) VALUES
-(33, 6, 1, '80'),
-(34, 6, 2, '4'),
-(35, 6, 10, '500000'),
-(36, 6, 14, '5');
+(105, 6, 1, '85'),
+(106, 6, 2, '3'),
+(107, 6, 10, '400000'),
+(108, 6, 14, '3'),
+(109, 7, 1, '95'),
+(110, 7, 2, '3'),
+(111, 7, 10, '600000'),
+(112, 7, 14, '3'),
+(113, 9, 1, '90'),
+(114, 9, 2, '6'),
+(115, 9, 10, '400000'),
+(116, 9, 14, '3');
 
 -- --------------------------------------------------------
 
@@ -209,17 +220,6 @@ INSERT INTO `pimpinan` (`id_pimpinan`, `id_user`, `nama_pimpinan`, `email`, `jen
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_kelulusan`
---
-
-CREATE TABLE `setting_kelulusan` (
-  `id_setting` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `user`
 --
 
@@ -300,12 +300,6 @@ ALTER TABLE `pimpinan`
   ADD PRIMARY KEY (`id_pimpinan`);
 
 --
--- Indeks untuk tabel `setting_kelulusan`
---
-ALTER TABLE `setting_kelulusan`
-  ADD PRIMARY KEY (`id_setting`);
-
---
 -- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
@@ -319,7 +313,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `data_isian`
 --
 ALTER TABLE `data_isian`
-  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_kriteria`
@@ -331,7 +325,7 @@ ALTER TABLE `data_kriteria`
 -- AUTO_INCREMENT untuk tabel `data_perhitungan`
 --
 ALTER TABLE `data_perhitungan`
-  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_ref` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`
@@ -362,12 +356,6 @@ ALTER TABLE `pengumuman`
 --
 ALTER TABLE `pimpinan`
   MODIFY `id_pimpinan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `setting_kelulusan`
---
-ALTER TABLE `setting_kelulusan`
-  MODIFY `id_setting` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`

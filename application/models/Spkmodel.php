@@ -84,13 +84,15 @@
 	    		'nilai_ref' => $data['nilai_ref'],
 	    	);
 	    	$this->db->insert('data_perhitungan',$isian);
+	    	return;
     }
 
     public function addisian($data){
-    	$isian2 = array(
+    	$isian = array(
 	    		'id_mahasiswa' => $data['id_mahasiswa'],
 	    	);
-	    $this->db->insert('data_isian',$isian2);
+	    $this->db->insert('data_isian',$isian);
+	    return;
     }
 
     public function getKriterianilai($id){
@@ -111,7 +113,10 @@
     }
 
     public function updateIsian($data){
-    	$datas = array('vektor_s' => $data['vektor_s'], );
+    	$datas = array(
+    		'vektor_s' => $data['vektor_s'],
+    		'nilai_akhir' => $data['lulus'],
+    		 );
     	$this->db->where('id_mahasiswa' ,$data['id_mahasiswa']);
         $this->db->update('data_isian',$datas);
         return;
@@ -162,6 +167,39 @@
 		$this->db->trans_complete();
     	
         return;
+    }
+
+    public function getLulus(){
+    	$this->db->select('*');
+      	$this->db->from('data_isian');
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function getLulusmahas($id){
+    	$this->db->select('*');
+      	$this->db->from('data_isian');
+      	$this->db->where('id_mahasiswa',$id);
+      	$query = $this->db->get();
+      	return $query;
+    }
+
+    public function updateIsianLulus($data){
+    	$datas = array(
+    		'nilai_akhir' => $data['nilai_akhir'],
+    		 );
+    	$this->db->where('id_mahasiswa' ,$data['id_mahasiswa']);
+        $this->db->update('data_isian',$datas);
+        return;
+    }
+
+    public function getNilaiKelulusan(){
+    	$this->db->select('*');
+      	$this->db->from('data_isian');
+      	$this->db->join('mahasiswa','mahasiswa.id_mahasiswa = data_isian.id_mahasiswa','left');
+      	$this->db->order_by('nilai_akhir', 'DESC');
+      	$query = $this->db->get();
+      	return $query;
     }
 
 
